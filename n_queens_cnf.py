@@ -34,21 +34,21 @@ class Board:
                 for j in range(r+1, self.N):
                     self.clauses.append([-v, -self.cell2int(j,c)])
                 # same diagonals with (r,c)
-                i = r + 1
-                j = c + 1
-                while i < self.N and j < self.N: 
+                for i, j in zip(range(r+1, self.N), range(c+1, self.N)):
                     self.clauses.append([-v, -self.cell2int(i,j)])
-                    i += 1
-                    j += 1
-                i = r + 1
-                j = c - 1
-                while i < self.N and j >= 0:
+                for i, j in zip(range(r+1, self.N), range(c-1, -1, -1)):
                     self.clauses.append([-v, -self.cell2int(i,j)])
-                    i += 1
-                    j -= 1
 
     def print_all_cnf(self):
-        print(self.clauses)
+        for clause in self.clauses:
+            print("(", end="")
+            for v in clause:
+                if v != clause[-1]: 
+                    print(str(v)+" v ", end="")
+                else:
+                    print(str(v)+")")
+        
+        #print(self.clauses)
 
     def solve(self):
         #self.generate_all_cnf()
