@@ -49,6 +49,16 @@ class Board:
                 else:
                     print(str(v)+")")
         
+    def print_all_cnf_to_file(self, filename):
+        with open(filename + '.txt', 'w') as f:
+            for clause in self.clauses:
+                f.write("(")
+                for v in clause:
+                    if v != clause[-1]: 
+                        f.write(str(v)+" v ")
+                    else:
+                        f.write(str(v)+")\n")
+                        
     def print_solutions(self):
         # print all satisfied sets
         with Solver(bootstrap_with=self.clauses) as s:
@@ -72,12 +82,13 @@ if __name__ == "__main__":
         level = input()
 
         if level == "1" or level == "2":
-            board = Board(5, int(level))
+            board = Board(8, int(level))
             board.generate_all_cnf()
             print("Generated CNFs for level " + level + " (task c):")       
             board.print_all_cnf()
             print("All sets of satisfied values for level " + level + "(task d):")
             board.print_solutions()
+            board.print_all_cnf_to_file('cnf' + level)
 
         elif level == "0":
             break
