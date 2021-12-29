@@ -51,7 +51,7 @@ class Board:
         
     def print_solutions(self):
         # print all satisfied sets
-        with Solver(bootstrap_with=[clause for clause in self.clauses]) as s:
+        with Solver(bootstrap_with=self.clauses) as s:
             #print(s.solve())
             for m in s.enum_models():
                 res = []
